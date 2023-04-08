@@ -19,7 +19,8 @@ const userController = {
             res.json(user);
         } catch (error) {
             console.log(error);
-            res.send('Não foi possível salvar o usuário na base de dados');
+            const arrayErros = error.errors.map((err) =>  {return { field: err.path, message: err.message}});
+            res.json(arrayErros);
         }
     },
     

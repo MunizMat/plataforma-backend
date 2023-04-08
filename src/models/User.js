@@ -26,7 +26,10 @@ User.init({
     email: {
         type: DataTypes.STRING,
         allowNull: false, 
-        unique: true,
+        unique: {
+            args: true,
+            msg: 'Uma conta já existe com este email'
+        },
         validate: {
             notEmpty: {
                 msg: 'Campo "email" é obrigatório'
@@ -41,7 +44,7 @@ User.init({
         allowNull: false,
         validate: {
             notEmpty: {
-                msg: 'Campo "senha" é obrigatório'
+                msg: "Campo 'senha' é obrigatório"
             },
             len: {
                 agrs: [6, 20],
