@@ -5,7 +5,7 @@ const cors =  require('cors');
 // Routes
 const homeRoutes = require('./src/routes/homeRoutes');
 const userRoutes = require('./src/routes/userRoutes');
-const tokenRoutes = require('./src/routes/userRoutes');
+const tokenRoutes = require('./src/routes/tokenRoutes');
 
 function App(){
     this.app = express();
