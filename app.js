@@ -1,8 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const cors =  require('cors');
+
+// Routes
 const homeRoutes = require('./src/routes/homeRoutes');
 const userRoutes = require('./src/routes/userRoutes');
+const tokenRoutes = require('./src/routes/userRoutes');
 
 function App(){
     this.app = express();
@@ -16,6 +19,7 @@ function App(){
     // Rotas
     this.app.use('/', homeRoutes);
     this.app.use('/users', userRoutes);
+    this.app.use('/auth', tokenRoutes);
 }
 
 module.exports = new App();

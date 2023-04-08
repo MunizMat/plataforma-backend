@@ -12,6 +12,18 @@ const userController = {
             res.send('Não foi possível encontrar os usuários');
         }
     },
+    show: async (req, res) => {
+        console.log('Os dados chegaram');
+        res.json(req.body);
+        // try {
+        //     let users = await User.findAll();
+        //     users = JSON.stringify(users, ['id', 'createdAt', 'updatedAt'], ' ');
+        //     res.send(users);
+        // } catch (error) {
+        //     console.log(error);
+        //     res.send('Não foi possível encontrar os usuários');
+        // }
+    },
 
     store: async (req, res) => {
         try {
