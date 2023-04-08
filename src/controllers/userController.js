@@ -14,16 +14,13 @@ const userController = {
     },
 
     store: async (req, res) => {
-        console.log('Recebi dados do formulário');
-        console.log(req.body);
-        res.send('OK');
-        // try {
-        //     await User.create(req.body);
-        //     res.send('O usuário foi salvo na base de dados!');
-        // } catch (error) {
-        //     console.log(error);
-        //     res.send('Não foi possível salvar o usuário na base de dados');
-        // }
+        try {
+            const user = await User.create(req.body);
+            res.json(user);
+        } catch (error) {
+            console.log(error);
+            res.send('Não foi possível salvar o usuário na base de dados');
+        }
     },
     
     delete: async (req, res) => {
