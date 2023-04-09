@@ -4,9 +4,8 @@ const userController = {
 
     index: async (req, res) => {
         try {
-            let users = await User.findAll();
-            users = JSON.stringify(users, ['id', 'createdAt', 'updatedAt'], ' ');
-            res.send(users);
+            const users = await User.findAll();
+            res.json(users);
         } catch (error) {
             console.log(error);
             res.send('Não foi possível encontrar os usuários');

@@ -1,5 +1,8 @@
+require('dotenv').config();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 
  const tokenController = {
@@ -15,7 +18,9 @@ const bcrypt = require('bcrypt');
 
             if (!senhaIsCorrect) return res.json('Senha incorreta');
 
-            return res.json('Usuário encontrado');
+            const token = jwt.sign({ id: user.id}, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRATION });
+
+            return res.json(token);
         } catch (error) {
             console.log(error);
             res.send('Não funcionou');
