@@ -9,7 +9,6 @@ module.exports = async(req, res, next) => {
 
     try {
         const tokenIsValid = jwt.verify(token, process.env.TOKEN_SECRET);
-        res.json(token);
     } catch (error) {
         console.log(error);
         return res.json('Credenciais inválidas');
