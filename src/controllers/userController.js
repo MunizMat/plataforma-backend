@@ -31,7 +31,8 @@ const userController = {
         } catch (error) {
             console.log(error);
             const arrayErros = error.errors.map((err) =>  {return { field: err.path, message: err.message}});
-            res.json(arrayErros);
+            const errors = { errors: [...arrayErros]};
+            res.json(errors);
         }
     },
     

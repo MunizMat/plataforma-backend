@@ -12,18 +12,18 @@ const jwt = require('jsonwebtoken');
             const user = await User.findOne({ where: { email}});
 
             // Checando se o usuário realmente existe na base de dados
-            if(!user) return res.json('Usuário não existe');
+            if(!user) return res.json({ error: { field: 'email', msg: 'Usuário não existe'}});
             
             const senhaIsCorrect = await bcrypt.compare(senha, user.hashSenha);
 
-            if (!senhaIsCorrect) return res.json('Senha incorreta');
+            if (!senhaIsCorrect) return res.json({ error : { field: 'senha', msg: 'Senha incorreta'} });
 
             const token = jwt.sign({ id: user.id}, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRATION });
 
-            return res.json(token);
+            return res.json({token});
         } catch (error) {
             console.log(error);
-            res.send('Não funcionou');
+            res.json('Não funcionou');
         }
     }
 }
