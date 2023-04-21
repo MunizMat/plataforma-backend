@@ -27,6 +27,10 @@ Prova.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
+    dia: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     gabarito: {
         type: DataTypes.JSON,
         allowNull: false,

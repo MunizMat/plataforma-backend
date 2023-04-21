@@ -5,7 +5,7 @@ const provaController = require('../controllers/provaController');
 const userAuth = require('../middlewares/userAuth');
 
 router.post('/', provaController.store);
-router.get('/', userAuth ,provaController.index);
+router.get('/' ,provaController.index);
 router.get('/:id', provaController.show);
 router.put('/', provaController.update);
 router.delete('/:id', provaController.delete);
