@@ -4,27 +4,10 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
 const provaController = {
 
-    /*
-    [{
-        vestibular: 'FUVEST',
-        anosDisponiveis: ['2023', '2022', '2021']
-    },
-    {
-        vestibular: 'UNICAMP',
-        anosDisponiveis: ['2022', '2021']
-    }]
-    */
-
     index: async (req, res) => {
         try {
-            const vestibulares = await sequelize.query("SELECT DISTINCT vestibular FROM Provas");
-            const data = [ ...vestibulares[0] ];
-            for (let i = 0; i < data.length; i++){
-                const anosDisponiveis = await sequelize.query(`SELECT DISTINCT ano FROM Provas WHERE vestibular = '${data[i].vestibular}' `);
-                console.log(anosDisponiveis);
-                data[i].anosDisponiveis = anosDisponiveis[03].map(obj => obj.ano);
-            }
-            res.json(data);
+            const provas = await Prova.findAll({ attributes: ['id', 'nome', 'vestibular', 'prova', 'ano', 'dia'] });
+            res.json(provas);
         } catch (error) {
             console.log(error);
             res.json(error);
@@ -32,6 +15,14 @@ const provaController = {
     },
 
     show: async (req, res) => {
+        const { id } = req.params;
+        try {
+            const prova = await Prova.findByPk(id);
+            res.json(prova);
+        } catch (error) {
+            console.log(error);
+            res.json(error);
+        }
 
     },
 

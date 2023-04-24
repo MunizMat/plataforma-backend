@@ -7,6 +7,7 @@ const homeRoutes = require('./src/routes/homeRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const tokenRoutes = require('./src/routes/tokenRoutes');
 const provaRoutes = require('./src/routes/provaRoutes');
+const simuladoRoutes = require('./src/routes/simuladoRoutes');
 
 function App(){
     this.app = express();
@@ -22,6 +23,7 @@ function App(){
     this.app.use('/users', userRoutes);
     this.app.use('/provas', provaRoutes);
     this.app.use('/auth', tokenRoutes);
+    this.app.use('/simulados', simuladoRoutes);
 }
 
 module.exports = new App();
