@@ -6,12 +6,6 @@ const bcrypt = require('bcrypt');
 class User extends Model {}
 
 User.init({
-    id: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        defaultValue: UUIDV1,
-        primaryKey: true
-    },
     nome: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -58,11 +52,16 @@ User.init({
     
 }, { sequelize });
 
+module.exports = User;
+
 User.beforeSave(async (user, options) => {
     const hashedPassword = await bcrypt.hash(user.senha, 10);
     user.hashSenha = hashedPassword;
 });
 
+const Simulado = require('../models/Simulado');
+
+User.hasMany(Simulado);
+
 User.sync();
 
-module.exports = User;

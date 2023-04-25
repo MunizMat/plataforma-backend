@@ -15,7 +15,8 @@ const simuladoController = {
     store: async (req, res) => {
         try {
             const simulado = await Simulado.create(req.body);
-            res.json(simulado);
+            const prova = await simulado.getProva();
+            res.json({ simulado, prova });
         } catch (error) {
             console.log(error);
             res.json(error);

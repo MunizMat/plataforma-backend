@@ -1,9 +1,9 @@
 require('dotenv').config();
-const Simulado = require('../models/Simulado');
 const { Sequelize, DataTypes, Model, UUIDV1} = require('sequelize');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
 
 class Prova extends Model {}
+
 
 Prova.init({
     id: {
@@ -39,12 +39,13 @@ Prova.init({
 
 }, { sequelize });
 
+module.exports = Prova;
+
+const Simulado = require('../models/Simulado');
+
 Prova.hasMany(Simulado);
 
 
-Simulado.belongsTo(Prova);
+Prova.sync();
 
 
-Prova.sync({ alter: true });
-
-module.exports = Prova;

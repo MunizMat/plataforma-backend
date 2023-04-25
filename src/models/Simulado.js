@@ -1,25 +1,46 @@
 require('dotenv').config();
-const Prova = require('../models/Prova');
 const { Sequelize, DataTypes, Model, UUIDV1} = require('sequelize');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
 
 class Simulado extends Model {}
 
+
 Simulado.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+    isInProgress: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     },
-    nome: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+    startedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
+    finishedAt: {
+        type: DataTypes.DATE
+    },
+    availableUntil: {
+        type: DataTypes.DATE
+    },
+    respostas: {
+        type: DataTypes.JSON
+    },
+    provaId: {
+        type: DataTypes.INTEGER,
+        references: { model: 'Provas', key: 'id' }
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        references: { model: 'Users', key: 'id' }
     }
 
 }, { sequelize });
 
-
-Simulado.sync({ alter: true });
-
 module.exports = Simulado;
+
+const Prova = require('../models/Prova');
+const User = require('../models/User');
+
+Simulado.belongsTo(Prova, { foreignKey: 'provaId'});
+Simulado.belongsTo(User, { foreignKey: 'userId'});
+
+
+Simulado.sync();
