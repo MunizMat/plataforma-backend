@@ -6,7 +6,7 @@ const provaController = {
 
     index: async (req, res) => {
         try {
-            const provas = await Prova.findAll({ attributes: ['id', 'nome', 'vestibular', 'prova', 'ano', 'dia'] });
+            const provas = await Prova.findAll({ attributes: ['id', 'nome', 'vestibular', 'prova', 'ano', 'dia', 'tempoDeProva'] });
             res.json(provas);
         } catch (error) {
             console.log(error);

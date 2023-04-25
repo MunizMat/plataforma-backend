@@ -23,6 +23,10 @@ Simulado.init({
     respostas: {
         type: DataTypes.JSON
     },
+    tempoDeProva: {
+        type: DataTypes.VIRTUAL,
+        allowNull: false
+    },
     provaId: {
         type: DataTypes.INTEGER,
         references: { model: 'Provas', key: 'id' }
@@ -34,6 +38,21 @@ Simulado.init({
 
 }, { sequelize });
 
+
+Simulado.beforeSave(async (simulado, options) => {
+    function getExamTime() {
+        const [horas, minutos] = simulado.tempoDeProva.split('h');
+        const horasEmMilisegundos = horas * 60 * 60 * 1000;
+        
+        if (minutos){
+            return horasEmMilisegundos + minutos * 60 * 1000;
+        }
+
+        return horasEmMilisegundos;
+    };
+    const availableUntil = new Date(Date.now() + getExamTime());
+    simulado.availableUntil = availableUntil;
+});
 module.exports = Simulado;
 
 const Prova = require('../models/Prova');

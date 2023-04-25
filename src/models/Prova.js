@@ -32,6 +32,9 @@ Prova.init({
         type: DataTypes.STRING,
         allowNull: true
     },
+    tempoDeProva: {
+        type: DataTypes.STRING
+    },
     gabarito: {
         type: DataTypes.JSON,
         allowNull: false,
