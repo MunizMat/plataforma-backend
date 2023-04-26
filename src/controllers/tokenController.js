@@ -20,7 +20,7 @@ const jwt = require('jsonwebtoken');
 
             const token = jwt.sign({ id: user.id}, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRATION });
 
-            return res.json({id: user.id, email: user.email, token});
+            return res.json({id: user.id, nome: user.nome, email: user.email, token});
         } catch (error) {
             console.log(error);
             res.json('Não funcionou');
