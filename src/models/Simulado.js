@@ -26,20 +26,12 @@ Simulado.init({
     tempoDeProva: {
         type: DataTypes.VIRTUAL,
         allowNull: false
-    },
-    provaId: {
-        type: DataTypes.INTEGER,
-        references: { model: 'Provas', key: 'id' }
-    },
-    userId: {
-        type: DataTypes.INTEGER,
-        references: { model: 'Users', key: 'id' }
     }
 
 }, { sequelize });
 
 
-Simulado.beforeSave(async (simulado, options) => {
+Simulado.beforeCreate(async (simulado, options) => {
     function getExamTime() {
         const [horas, minutos] = simulado.tempoDeProva.split('h');
         const horasEmMilisegundos = horas * 60 * 60 * 1000;
@@ -58,8 +50,8 @@ module.exports = Simulado;
 const Prova = require('../models/Prova');
 const User = require('../models/User');
 
-Simulado.belongsTo(Prova, { foreignKey: 'provaId'});
-Simulado.belongsTo(User, { foreignKey: 'userId'});
+Simulado.belongsTo(Prova);
+Simulado.belongsTo(User);
 
 
 Simulado.sync();

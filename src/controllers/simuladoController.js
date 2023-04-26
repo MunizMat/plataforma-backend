@@ -28,7 +28,15 @@ const simuladoController = {
 
     },
 
-    update: (req, res) => {
+    update: async (req, res) => {
+        try {
+            const simulado = await Simulado.findByPk(req.params.id);
+            const updatedSimulado = await simulado.update(req.body);
+            res.json(updatedSimulado);
+        } catch (error) {
+            console.log(error);
+            res.json(error);
+        }
     },
 }
 
