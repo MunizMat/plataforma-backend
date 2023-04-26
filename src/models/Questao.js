@@ -1,8 +1,24 @@
 require('dotenv').config();
 const { Sequelize, DataTypes, Model} = require('sequelize');
+const openai = require('openai');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
 
-class Questao extends Model {}
+class Questao extends Model {
+    async getCategory(texto){
+        const model = 'text-davinci-002';
+        const prompt = `Classifique a seguinte questão de prova em uma das categorias: ['Exatas', 'Humanas']\nQuestão de prova:${texto}\n\nCategory:`;
+        const response = await openai.completions.create({
+            engine: model,
+            prompt,
+            max_tokens: 1,
+            n: 1,
+            stop: '\n',
+        }, { apiKey: process.env.OPENAI_API_KEY });
+        console.log(response);
+    }
+    getSubCategory(){}
+    getCategory(){}
+}
 
 
 Questao.init({
