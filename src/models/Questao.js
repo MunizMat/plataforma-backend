@@ -17,15 +17,22 @@ Questao.init({
     },
     subCategoria: {
         type: DataTypes.STRING
+    },
+    correspondencia: {
+        type: DataTypes.JSON
     }
 
 
-}, { sequelize });
+}, { sequelize, tableName: 'Questoes' });
 
 const Prova = require('./Prova');
+const Gabarito = require('./Gabarito');
 
 Prova.hasMany(Questao);
 Questao.belongsTo(Prova);
+
+Gabarito.hasMany(Questao);
+Questao.belongsTo(Gabarito)
 
 module.exports = Questao;
 

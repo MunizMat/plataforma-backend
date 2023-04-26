@@ -9,6 +9,7 @@ const tokenRoutes = require('./src/routes/tokenRoutes');
 const provaRoutes = require('./src/routes/prova/provaRoutes');
 const simuladoRoutes = require('./src/routes/prova/simuladoRoutes');
 const questaoRoutes = require('./src/routes/prova/questaoRoutes');
+const gabaritoRoutes = require('./src/routes/prova/gabaritoRoutes');
 
 function App(){
     this.app = express();
@@ -26,6 +27,7 @@ function App(){
     this.app.use('/auth', tokenRoutes);
     this.app.use('/provas/simulados', simuladoRoutes);
     this.app.use('/provas/questao', questaoRoutes);
+    this.app.use('/provas/gabarito', gabaritoRoutes);
 }
 
 module.exports = new App();
