@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const provaController = require('../controllers/provaController');
-const userAuth = require('../middlewares/userAuth');
+const provaController = require('../../controllers/provaController');
+const userAuth = require('../../middlewares/userAuth');
 
 router.post('/', provaController.store);
 router.get('/' ,provaController.index);

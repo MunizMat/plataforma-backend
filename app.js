@@ -6,8 +6,9 @@ const cors =  require('cors');
 const homeRoutes = require('./src/routes/homeRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const tokenRoutes = require('./src/routes/tokenRoutes');
-const provaRoutes = require('./src/routes/provaRoutes');
-const simuladoRoutes = require('./src/routes/simuladoRoutes');
+const provaRoutes = require('./src/routes/prova/provaRoutes');
+const simuladoRoutes = require('./src/routes/prova/simuladoRoutes');
+const questaoRoutes = require('./src/routes/prova/questaoRoutes');
 
 function App(){
     this.app = express();
@@ -23,7 +24,8 @@ function App(){
     this.app.use('/users', userRoutes);
     this.app.use('/provas', provaRoutes);
     this.app.use('/auth', tokenRoutes);
-    this.app.use('/simulados', simuladoRoutes);
+    this.app.use('/provas/simulados', simuladoRoutes);
+    this.app.use('/provas/questao', questaoRoutes);
 }
 
 module.exports = new App();

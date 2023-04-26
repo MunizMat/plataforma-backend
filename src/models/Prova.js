@@ -6,21 +6,7 @@ class Prova extends Model {}
 
 
 Prova.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    nome: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
     vestibular: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    prova: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -28,17 +14,16 @@ Prova.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
+    provas: {
+        type: DataTypes.JSON
+    },
     dia: {
         type: DataTypes.STRING,
         allowNull: true
     },
     tempoDeProva: {
         type: DataTypes.STRING
-    },
-    gabarito: {
-        type: DataTypes.JSON,
-        allowNull: false,
-    },
+    }
 
 }, { sequelize });
 
@@ -49,6 +34,6 @@ const Simulado = require('../models/Simulado');
 Prova.hasMany(Simulado);
 
 
-Prova.sync();
+Prova.sync({ alter: true});
 
 

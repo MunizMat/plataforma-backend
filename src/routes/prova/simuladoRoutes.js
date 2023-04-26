@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const simuladoController = require('../controllers/simuladoController');
+const simuladoController = require('../../controllers/simuladoController');
 
 router.post('/', simuladoController.store);
 router.get('/' ,simuladoController.index);

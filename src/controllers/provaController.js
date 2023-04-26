@@ -27,21 +27,9 @@ const provaController = {
     },
 
     store: async (req, res) => {
-        const { ano, dia, jsonGabarito } = req.body;
-        const provas = Object.keys(jsonGabarito);
-        const letrasProvas = provas.map(value => value.split('PROVAS ')[1]);
         try {
-            for (const letra of letrasProvas){
-                const prova = await Prova.create({
-                    nome: `UNICAMP-${ano}-${letra}`,
-                    vestibular: 'UNICAMP',
-                    prova: letra,
-                    dia,
-                    ano,
-                    gabarito: jsonGabarito[`PROVAS ${letra}`]
-                });
-            }
-            res.json(provas);
+            const prova = await Prova.create(req.body);
+            res.json(prova);
         } catch (error) {
             console.log(error);
             res.json(error);
@@ -52,8 +40,17 @@ const provaController = {
 
     },
 
-    update: (req, res) => {
-        res.send('Update de users');
+    update: async (req, res) => {
+        try {
+            const provas = await Prova.findAll({ where: { vestibular: 'UNICAMP', ano: '2022'}});
+            provas.forEach(async(prova) => {
+                await prova.update(req.body);
+            })
+            res.json(provas);
+        } catch (error) {
+            console.log(error);
+            res.json(error);
+        }
     },
 }
 
