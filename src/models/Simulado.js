@@ -47,11 +47,4 @@ Simulado.beforeCreate(async (simulado, options) => {
 });
 module.exports = Simulado;
 
-const Prova = require('../models/Prova');
-const User = require('../models/User');
-
-Simulado.belongsTo(Prova);
-Simulado.belongsTo(User);
-
-
 Simulado.sync();

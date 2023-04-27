@@ -59,9 +59,7 @@ User.beforeSave(async (user, options) => {
     user.hashSenha = hashedPassword;
 });
 
-const Simulado = require('../models/Simulado');
 
-User.hasMany(Simulado);
 
 User.sync();
 

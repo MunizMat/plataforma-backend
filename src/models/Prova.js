@@ -1,11 +1,16 @@
 require('dotenv').config();
 const { Sequelize, DataTypes, Model, UUIDV1} = require('sequelize');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
+const { default: axios } = require('axios');
+
 
 class Prova extends Model {}
 
 
 Prova.init({
+    nome: {
+        type: DataTypes.STRING
+    },
     vestibular: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -29,11 +34,19 @@ Prova.init({
 
 module.exports = Prova;
 
-const Simulado = require('../models/Simulado');
-
-Prova.hasMany(Simulado);
+const Gabarito = require('./Gabarito');
 
 
-Prova.sync({ alter: true});
+Prova.afterCreate(async (prova, options) => {
+    try {
+        const response = await axios.post('http://localhost:3000/provas/gabarito', { ProvaId: prova.id, nome: prova.nome})
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+Prova.sync();
 
 
