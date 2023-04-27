@@ -28,11 +28,8 @@ Questao.init({
 
 }, { sequelize, tableName: 'Questoes' });
 
-
-module.exports = Questao;
-
-
 Questao.sync();
 
+module.exports = Questao;
 
 
