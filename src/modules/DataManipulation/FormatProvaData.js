@@ -1,22 +1,28 @@
 const regex = require('./Regex');
-const sampleText = require('./rawPDFText/fuvest2022');
+const sampleText = require('./rawPDFText/fuvest2021');
 
 class FormatProvaData{
-    constructor(rawData){
-        this.rawData = rawData;
+    constructor(rawAnswers, rawQuestions){
+        this.rawAnswers = rawAnswers;
+        this.rawQuestions = rawQuestions;
     }
 
-    get findRawQuestionAnswers(){
-        const newText = regex.removeLineBreak(this.rawData);
+    get findRawAnswers(){
+        const newText = regex.removeLineBreak(this.rawAnswers);
+        return [...newText.matchAll(regex.questionAnswers)];
+    }
+    
+    get findRawQuestions(){
+        const newText = regex.removeLineBreak(this.rawQuestions);
         return [...newText.matchAll(regex.questionAnswers)];
     }
 
-    get questionAnswersArray(){
-        return this.findRawQuestionAnswers.map(value => value[0]);
+    get answersArray(){
+        return this.findRawAnswers.map(value => value[0]);
     }
 
     get answers(){
-        const splitAnswerData =  this.questionAnswersArray.map(value => value.split('--'));
+        const splitAnswerData =  this.answersArray.map(value => value.split('--'));
         return splitAnswerData.map(value => {
             return {
                 alternativaCorreta: value[0],
@@ -33,5 +39,6 @@ class FormatProvaData{
 
 
 }
+
 
 module.exports = FormatProvaData

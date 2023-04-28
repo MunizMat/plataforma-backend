@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Sequelize, DataTypes, Model, UUIDV1} = require('sequelize');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
+const FormatProvaData = require('../modules/DataManipulation/FormatProvaData');
 
 
 class Prova extends Model {}
@@ -32,14 +33,6 @@ Prova.init({
 }, { sequelize });
 
 
-Prova.afterCreate(async (prova, options) => {
-    try {
-    } catch (error) {
-        console.log(error);
-    }
-    
-});
-
 module.exports = Prova;
 
 const Questao = require('./Questao');
@@ -50,6 +43,19 @@ Questao.belongsTo(Prova);
 
 Prova.hasMany(Simulado);
 Simulado.belongsTo(Prova);
+
+Prova.afterCreate(async (prova, options) => {
+    try {
+        const rawText = require(`../modules/DataManipulation/rawPDFText/${prova.nome}`);
+        const provaData = new FormatProvaData(rawText);
+        provaData.answers.forEach(async (answer) => {
+            const questao = await Questao.create({...answer, ProvaId: prova.id, alternativas: ['A', 'B', 'C', 'D', 'E']});
+        })
+    } catch (error) {
+        console.log(error);
+    }
+    
+});
 
 Prova.sync();
 

@@ -10,7 +10,7 @@ class Questao extends Model {
 
 Questao.init({
     alternativas: {
-        type: DataTypes.STRING
+        type: DataTypes.JSON
     }, 
     alternativaCorreta: {
         type: DataTypes.STRING
@@ -35,6 +35,7 @@ const Prova = require('./Prova');
 
 Questao.belongsTo(Prova);
 Prova.hasMany(Questao);
+
 Questao.sync();
 
 
