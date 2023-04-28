@@ -28,8 +28,14 @@ Questao.init({
 
 }, { sequelize, tableName: 'Questoes' });
 
-Questao.sync();
 
 module.exports = Questao;
+
+const Prova = require('./Prova');
+
+Questao.belongsTo(Prova);
+Prova.hasMany(Questao);
+Questao.sync();
+
 
 

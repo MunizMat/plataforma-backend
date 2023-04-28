@@ -1,7 +1,6 @@
 require('dotenv').config();
 const { Sequelize, DataTypes, Model, UUIDV1} = require('sequelize');
 const sequelize = new Sequelize(process.env.MYSQL_URL);
-const Gabarito = require('./Gabarito');
 
 
 class Prova extends Model {}
@@ -35,15 +34,25 @@ Prova.init({
 
 Prova.afterCreate(async (prova, options) => {
     try {
-        const gabarito = await Gabarito.create({ ProvaId: prova.id, nome: prova.nome});
     } catch (error) {
         console.log(error);
     }
     
 });
 
+module.exports = Prova;
+
+const Questao = require('./Questao');
+const Simulado = require('./Simulado');
+
+Prova.hasMany(Questao);
+Questao.belongsTo(Prova);
+
+Prova.hasMany(Simulado);
+Simulado.belongsTo(Prova);
+
 Prova.sync();
 
-module.exports = Prova;
+
 
 
