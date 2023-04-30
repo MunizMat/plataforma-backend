@@ -1,9 +1,12 @@
-require('dotenv').config();
 const { Configuration, OpenAIApi } = require("openai");
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 class OpenAI{
     constructor(){
         this.config = new Configuration({
+            organization: 'org-lB6eMFHRwmXBDLjtoZLMushv',
             apiKey: process.env.OPENAI_API_KEY
         })
         this.openai = new OpenAIApi(this.config);
@@ -20,4 +23,4 @@ class OpenAI{
     }
 }
 
-module.exports = OpenAI
+module.exports = OpenAI;

@@ -1,10 +1,19 @@
 const regex = require('./Regex');
-const sampleText = require('./rawPDFText/fuvest2021');
+const sampleText = require('./rawPDFText/fuvest2022');
+const hugeText = require('./rawPDFText/hugeText');
 
 class FormatProvaData{
     constructor(rawAnswers, rawQuestions){
         this.rawAnswers = rawAnswers;
         this.rawQuestions = rawQuestions;
+    }
+
+    show(data){
+        console.log(data);
+    }
+
+    get rawQuestionsArray(){
+        return [...this.rawQuestions.matchAll(regex.questionText)];
     }
 
     get findRawAnswers(){
@@ -40,5 +49,9 @@ class FormatProvaData{
 
 }
 
+const provaData = new FormatProvaData(sampleText, hugeText);
+provaData.show(provaData.rawQuestionsArray);
+
 
 module.exports = FormatProvaData
+
